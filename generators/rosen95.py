@@ -12,7 +12,7 @@ from itertools import product
 from pathlib import Path
 import pypdfium2 as pdfium
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parent.parent
 BANK=ROOT/'题库'/'rosen-8'/'9.5'
 CATALOGUE=ROOT/'题库'/'页面索引'/'rosen-8'
 BOOK=ROOT.parent/'26fa-离散数学（下）'/'rosen, kenneth h - discrete mathematics and its applications (mcgraw-hill) - libgen.lc.pdf'

@@ -40,6 +40,7 @@
 
 #let keybox(title: "核心公式", body) = block(
   width: 100%,
+  breakable: false,
   inset: 9pt,
   radius: 3pt,
   fill: rgb("f4f7fa"),
@@ -52,6 +53,7 @@
 
 #let tipbox(title: "易错点 / 直观理解", body) = block(
   width: 100%,
+  breakable: false,
   inset: 9pt,
   radius: 3pt,
   fill: rgb("fdf8f2"),

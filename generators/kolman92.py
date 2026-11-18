@@ -8,7 +8,7 @@ import shutil
 from itertools import product
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 BANK = ROOT / '题库/kolman-6/9.2'
 CAT = ROOT / '题库/页面索引/kolman-6'
 CAPTURE = ROOT / '.inbox/2121152547941277697/e1e53bbf97a29c43dc18445990fdf93dec92efcfbc841f376a72fbbaf7007a5a'

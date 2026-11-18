@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image
 import pypdfium2 as pdfium
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parent.parent
 BANK=ROOT/'题库'/'digital-logic-7'
 CATALOGUE=ROOT/'题库'/'页面索引'/'digital-logic-7'
 BOOK=ROOT.parent/'26fa-数字逻辑与数字系统'/'数字逻辑.pdf'

@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 BANK = ROOT / '题库' / 'probability-bupt-2021' / 'fourth'
 CAT = ROOT / '题库' / '页面索引' / 'probability-bupt-2021'
 BOOK = ROOT.parent / '26fa-概率论与随机过程' / '概率论与随机过程.pdf'

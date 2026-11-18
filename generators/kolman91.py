@@ -3,7 +3,7 @@ import argparse,hashlib,json,re,shutil
 from fractions import Fraction as Q
 from itertools import product
 from pathlib import Path
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parent.parent
 BANK=ROOT/'题库'/'kolman-6'/'9.1';CAT=ROOT/'题库'/'页面索引'/'kolman-6'
 BOOK=next((ROOT.parent/'26fa-离散数学（下）').glob('Discrete mathematical structures sixth edition*.pdf'))
 SHA='9e95e1abd601348e39696917e4cf1fa9252b51ffc0aa2d23bdb469b9ea48fe48'

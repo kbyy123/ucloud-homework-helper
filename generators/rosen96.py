@@ -12,7 +12,7 @@ from itertools import combinations, product
 from pathlib import Path
 from PIL import Image
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parent.parent
 BANK=ROOT/'题库'/'rosen-8'/'9.6'
 CATALOGUE=ROOT/'题库'/'页面索引'/'rosen-8'
 BOOK=ROOT.parent/'26fa-离散数学（下）'/'rosen, kenneth h - discrete mathematics and its applications (mcgraw-hill) - libgen.lc.pdf'

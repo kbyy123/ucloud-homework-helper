@@ -12,7 +12,7 @@ import subprocess
 from itertools import product
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 BOOK = ROOT.parent / '26fa-离散数学（下）' / 'rosen, kenneth h - discrete mathematics and its applications (mcgraw-hill) - libgen.lc.pdf'
 BANK = ROOT / '题库' / 'rosen-8'
 LETTERS = list('abcde')

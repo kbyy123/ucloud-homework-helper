@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 BANK = ROOT / '题库' / 'computer-organization-7' / '5'
 REFS = ['5/3', '5/6', '5/8', '5/16']
 REQUIREMENTS = '第五章课后习题：3、6、8、16。'

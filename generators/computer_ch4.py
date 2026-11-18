@@ -4,7 +4,7 @@ from collections import Counter,defaultdict
 from datetime import datetime
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parent.parent
 BANK=ROOT/'题库'/'computer-organization-7'
 CAT=ROOT/'题库'/'页面索引'/'computer-organization-7'
 BOOK=ROOT.parent/'26fa-computer_architecture'/'计算机组成原理.pdf'

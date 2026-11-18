@@ -5,7 +5,7 @@ from fractions import Fraction as Q
 from itertools import combinations,product
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parent.parent
 BANK=ROOT/'题库'/'probability-bupt-2021'
 CATALOGUE=ROOT/'题库'/'页面索引'/'probability-bupt-2021'
 BOOK=ROOT.parent/'26fa-概率论与随机过程'/'概率论与随机过程.pdf'
