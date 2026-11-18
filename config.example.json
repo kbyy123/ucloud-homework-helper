@@ -1,0 +1,27 @@
+{
+  "timezone": "Asia/Shanghai",
+  "delivery": {
+    "format": "typst",
+    "outputDirectory": "output",
+    "dateField": "assignmentBeginTime",
+    "filename": "<课程名>/MM.dd-第x次作业.pdf"
+  },
+  "schedule": {
+    "hour": 12,
+    "minute": 0,
+    "enabled": true,
+    "automationId": "automation",
+    "destination": "thread"
+  },
+  "courses": [
+    {
+      "key": "离散数学",
+      "siteId": "REPLACE_WITH_SITE_ID",
+      "siteName": "离散数学（下）",
+      "bookId": "rosen-8",
+      "imageBookId": "rosen-8",
+      "imageCatalogue": "题库/页面索引/rosen-8/index.json",
+      "textbook": "./textbooks/discrete-mathematics.pdf"
+    }
+  ]
+}
