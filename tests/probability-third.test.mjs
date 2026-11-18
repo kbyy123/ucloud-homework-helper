@@ -27,6 +27,7 @@ test('第三次完整题号、小问及独立路由；旧两次材料指纹保�
 });
 
 test('第三次来源/小问变化不套旧答案；题干、解答、图、版本变化拦截；重跑保留人工修改',async t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-probability-third-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const c=source.course,course={key:c.key,siteId:c.id,siteName:c.name,bookId:c.bookId};

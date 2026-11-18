@@ -23,6 +23,7 @@ test('第四次完整八道教材题及补充证明路由；指定小问和全�
 });
 
 test('第四次审批绑定来源和原题/解答/图片版本；重跑保留人工注释',async t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-probability-fourth-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const c=source.course,course={key:c.key,siteId:c.id,siteName:c.name,bookId:c.bookId};

@@ -23,6 +23,7 @@ test('半群按第六版完整三题和内嵌正整数公式路由；既有群�
 });
 
 test('半群新来源先核对，审批对应完整素材；重跑保留人工修改',async t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-semigroups-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const c=source.course,course={key:c.key,siteId:c.id,siteName:c.name,bookId:'rosen-8',chapterBindings:[{chapter:'Group Theory',bookId:'kolman-6'}]};

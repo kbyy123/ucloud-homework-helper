@@ -26,6 +26,7 @@ test('9.6真实来源与完整原图/原生解答有独立指纹，9.5及旧章�
 });
 
 test('9.6需核对完整组及来源；修改/新增要求不复用，人工修改和旧归档保留',async t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-rosen96-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const c=source.course,course={key:c.key,siteId:c.id,siteName:c.name,bookId:c.bookId};

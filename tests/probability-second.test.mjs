@@ -31,6 +31,7 @@ test('新增独立题库不改变第一次材料指纹',async t=>{
 });
 
 test('第二次整组校验、来源变更与素材篡改拦截、归档重跑',async t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-probability-second-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const c=source.course,course={key:c.key,siteId:c.id,siteName:c.name,bookId:c.bookId};

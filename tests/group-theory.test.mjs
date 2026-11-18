@@ -34,6 +34,7 @@ test('群论新绑定不改变Rosen既有材料指纹；新解答包含版本/�
 });
 
 test('真实课程内新教材来源需重新核对；公式或来源变化不复用；修改/教材变化拦截',async t=>{
+ if(!source || !index)return t.skip('需要本地 .inbox/题库 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-group-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const c=source.course,course={key:c.key,siteId:c.id,siteName:c.name,bookId:'rosen-8',chapterBindings:[{chapter:'Group Theory',bookId:'kolman-6'}]};
