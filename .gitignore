@@ -8,6 +8,7 @@ __pycache__/
 *.pyc
 tools/
 archives/
+knowledge/
 output/
 config.json
 runtime.json

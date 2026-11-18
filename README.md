@@ -104,6 +104,7 @@ powershell -ExecutionPolicy Bypass -File .\run-scheduled.ps1 -CaptureOnly
        └── 10.29-第三章作业.pdf
    ```
    日期取云邮真实的布置时间 `assignmentBeginTime`（北京时间），不使用截止时间或抓取时间。
+5. **增量知识点总结**：每次作业归档完成后，Agent 会自动读取该课程已有的 `knowledge/<课程名>/知识点总结.typ` 与本次作业的 `题目.md`、`解答.typ`，按 `templates/knowledge.typ` 模板增量补充本次涉及的核心概念、公式、解题套路与易错点（通过 `meta.json` 去重），编译检查后同步输出到 `knowledge/<课程名>/知识点总结.pdf` 与 `output/<课程名>/知识点总结.pdf`。
 
 ---
 
