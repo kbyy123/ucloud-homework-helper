@@ -13,7 +13,6 @@
 - **Node.js** `>= 20`
 - **Python 3**（用于题库索引裁剪、PDF 检查与题目生成器，如依赖 `pymupdf` / `fitz` 等）
 - **Typst**（用于将 `解答.typ` 编译为 `解答.pdf`）
-- **Pandoc**（用于兼容旧版 Markdown 解答向 Typst 转换）
 - **Windows PowerShell**（用于读取/写入 Windows 凭据管理器）
 
 ---

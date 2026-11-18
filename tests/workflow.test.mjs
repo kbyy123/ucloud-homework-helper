@@ -100,7 +100,7 @@ test('验证失败不记完成，未知目录中的文件不会被覆盖',async 
   await assert.rejects(archive({root,source,materialHash:'m1',build:async dir=>{
     await build(dir);await writeFile(path.join(dir,'verification.json'),'{}');
   }}),/独立验证未通过/);
-  const existing=path.join(root,course.key,ID);
+  const existing=path.join(root,'archives',course.key,ID);
   await mkdir(existing,{recursive:true});
   await writeFile(path.join(existing,'题目.md'),'original manual work');
   const outcome=await archive({root,source,materialHash:'m1',build});

@@ -7,6 +7,7 @@ tmp/
 __pycache__/
 *.pyc
 tools/
+archives/
 output/
 config.json
 runtime.json
@@ -15,11 +16,6 @@ notification-log.json
 pdf-output.json
 pdf-visual-reviews.json
 题库/
-人工智能算法与工程/
-数字逻辑/
-概率论与随机过程/
-离散数学/
-计算机组成原理与体系结构/
 # Never add credentials, tokens, browser cookies, or .env files.
 .env
 .env.*

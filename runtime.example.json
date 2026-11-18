@@ -1,5 +1,4 @@
 {
   "python": "python",
-  "typst": "typst",
-  "pandoc": "pandoc"
+  "typst": "typst"
 }
