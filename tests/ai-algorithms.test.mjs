@@ -25,7 +25,6 @@ test('已批准来源仍须包含代码和要求的讲稿；附件变化和篡�
   const root=await mkdtemp(path.join(os.tmpdir(),'bupt-ai-policy-'));
   t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
   await mkdir(path.join(root,'templates'));
-  await copyFile(path.join(ROOT,'templates','ai-data-structures.cpp'),path.join(root,'templates','ai-data-structures.cpp'));
   await writeFile(path.join(root,'ai_algorithms.py'),'trusted fixture generator');
   const sourceHash=hash(source),refs=aiReferences(source).refs;
   const bank=path.join(root,'题库',AI_BOOK,source.id,sourceHash);
