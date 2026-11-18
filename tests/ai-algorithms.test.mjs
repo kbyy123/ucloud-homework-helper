@@ -8,6 +8,7 @@ import {AI_BOOK,AI_SITE,aiReferences,aiMaterialDigest} from '../lib/ai-algorithm
 import {deliveryName} from '../lib/pdf-delivery.mjs';
 import {hash} from '../lib/workflow.mjs';
 import {ROOT} from '../run.mjs';
+import {readOptionalJson} from './_local.mjs';
 
 const source={id:'2115592895636279298',title:'第三章作业',assignedAt:'2026-10-29 00:00',
   due:'2026-11-12 23:59:59',course:{key:'人工智能算法与工程',id:AI_SITE,bookId:AI_BOOK},
@@ -51,7 +52,7 @@ test('已批准来源仍须包含代码和要求的讲稿；附件变化和篡�
   await writeFile(path.join(inbox,'source.docx'),'version one');
   const sourceFile=path.join(root,'source.json'),out=path.join(root,'archive');
   await writeFile(sourceFile,JSON.stringify(source));await mkdir(out);
-  const runtime=JSON.parse(await readFile(path.join(ROOT,'runtime.json'),'utf8'));
+  const runtime=(await readOptionalJson('runtime.json')) || {python:process.env.HOMEWORK_PYTHON || 'python'};
   const script="import importlib.util,sys; from pathlib import Path; s=importlib.util.spec_from_file_location('ai_builder',sys.argv[1]); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.ROOT=Path(sys.argv[2]); m.build(Path(sys.argv[3]),Path(sys.argv[4]))";
   await copyFile(path.join(ROOT,'templates','homework.typ'),path.join(root,'templates','homework.typ'));
   execFileSync(runtime.python,['-c',script,path.join(ROOT,'generators','ai_algorithms.py'),root,sourceFile,out],{windowsHide:true});

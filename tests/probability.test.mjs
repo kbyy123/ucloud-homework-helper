@@ -6,13 +6,14 @@ import os from 'node:os';
 import {parseProbabilityReferences} from '../lib/probability.mjs';
 import {runWithClient,materialDigest,ROOT} from '../run.mjs';
 import {hash} from '../lib/workflow.mjs';
+import {readOptionalJson} from './_local.mjs';
 
 const ID='2113586328423948289';
-const input=path.join(ROOT,'.inbox',ID,'18fe9a94c335a9b14193c002ae31631838d0423b24ecbf85b903664359460534','source.json');
-const source=JSON.parse(await readFile(input,'utf8'));
+const source=await readOptionalJson('.inbox',ID,'18fe9a94c335a9b14193c002ae31631838d0423b24ecbf85b903664359460534','source.json');
 const expected=['2/1','2/3','2/8','2/13','2/18','2/23(1)','2/35(2)','3/2','3/7','3/8','3/9','supplement/empty-axioms-v1','1/26'];
 
-test('概率论按书页分章节，保留两个指定小问及补充证明的额外限制',()=>{
+test('概率论按书页分章节，保留两个指定小问及补充证明的额外限制',t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const parsed=parseProbabilityReferences(source.html);
  assert.equal(parsed.supported,true);assert.deepEqual(parsed.refs,expected);
  assert.deepEqual(parseProbabilityReferences('P35\n26').refs,['1/26']);
@@ -23,6 +24,7 @@ test('概率论按书页分章节，保留两个指定小问及补充证明的�
 });
 
 test('概率题库验证真实教材、整组范围和原生Typst；复核后仅处理匹配来源',async t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-probability-test-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const course={key:source.course.key,siteId:source.course.id,siteName:source.course.name,bookId:source.course.bookId};

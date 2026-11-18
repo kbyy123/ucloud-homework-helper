@@ -5,14 +5,16 @@ import path from 'node:path';
 import os from 'node:os';
 import {runWithClient,materialDigest,ROOT} from '../run.mjs';
 import {hash,parseReferences} from '../lib/workflow.mjs';
+import {readOptionalJson} from './_local.mjs';
 
 const ID='2117142590505717762';
-const source=JSON.parse(await readFile(path.join(ROOT,'.inbox',ID,'0ded50bab9a1db3219948acd7f73499da6e1828ad71f352ba1feed9d588d8d8d','source.json'),'utf8'));
+const source=await readOptionalJson('.inbox',ID,'0ded50bab9a1db3219948acd7f73499da6e1828ad71f352ba1feed9d588d8d8d','source.json');
 const refs=['9.6/4','9.6/16','9.6/32','9.6/44'];
 
-test('9.6真实来源与完整原图/原生解答有独立指纹，9.5及旧章节不变',async()=>{
+test('9.6真实来源与完整原图/原生解答有独立指纹，9.5及旧章节不变',async t=>{
+ const approved=await readOptionalJson('approved-tasks.json');
+ if(!source || !approved)return t.skip('需要本地 .inbox/题库/approved-tasks.json 数据');
  assert.deepEqual(parseReferences(source.html).refs,refs);
- const approved=JSON.parse(await readFile(path.join(ROOT,'approved-tasks.json'),'utf8'));
  const previous=await materialDigest(ROOT,'rosen-8',['9.5/16','9.5/26','9.5/46','9.5/60']);
  assert.equal(previous.digest,approved['2113561808636010497'].materialHash);
  const current=await materialDigest(ROOT,'rosen-8',refs);

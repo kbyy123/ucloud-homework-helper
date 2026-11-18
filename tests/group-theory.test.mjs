@@ -6,11 +6,13 @@ import os from 'node:os';
 import {bindGroupTextbook,parseGroupReferences,GROUP_REFS} from '../lib/group-theory.mjs';
 import {runWithClient,materialDigest,ROOT} from '../run.mjs';
 import {hash} from '../lib/workflow.mjs';
+import {readOptionalJson} from './_local.mjs';
 const ID='2118625671952728065';
-const source=JSON.parse(await readFile(path.join(ROOT,'.inbox',ID,'1afd0fc778ad2dfea1a59ff9982bff937d1917882f4d14ad05198c9b436cc8aa','source.json'),'utf8'));
-const index=JSON.parse(await readFile(path.join(ROOT,'题库/kolman-6/9.1/index.json'),'utf8'));
+const source=await readOptionalJson('.inbox',ID,'1afd0fc778ad2dfea1a59ff9982bff937d1917882f4d14ad05198c9b436cc8aa','source.json');
+const index=await readOptionalJson('题库/kolman-6/9.1/index.json');
 
-test('群论按真实章节选教材，按第六版分支选题并核验全部内嵌公式',()=>{
+test('群论按真实章节选教材，按第六版分支选题并核验全部内嵌公式',t=>{
+ if(!source || !index)return t.skip('需要本地 .inbox/题库 数据');
  const c={key:'离散数学',bookId:'rosen-8',chapterBindings:[{chapter:'Group Theory',bookId:'kolman-6'}]};
  assert.equal(bindGroupTextbook(c,{chapterName:'Relations'}).bookId,'rosen-8');
  assert.equal(bindGroupTextbook(c,{chapterName:'Group Theory'}).bookId,'kolman-6');
@@ -21,8 +23,9 @@ test('群论按真实章节选教材，按第六版分支选题并核验全部�
  assert.equal(parseGroupReferences(source.html,'Relations',index.inlineImageHashes).supported,false);
 });
 
-test('群论新绑定不改变Rosen既有材料指纹；新解答包含版本/正文/依赖校验',async()=>{
- const approved=JSON.parse(await readFile(path.join(ROOT,'approved-tasks.json'),'utf8'));
+test('群论新绑定不改变Rosen既有材料指纹；新解答包含版本/正文/依赖校验',async t=>{
+ const approved=await readOptionalJson('approved-tasks.json');
+ if(!approved || !index)return t.skip('需要本地 题库/approved-tasks.json 数据');
  for(const [id,refs] of [['2113561808636010497',['9.5/16','9.5/26','9.5/46','9.5/60']],['2117142590505717762',['9.6/4','9.6/16','9.6/32','9.6/44']]])
   assert.equal((await materialDigest(ROOT,'rosen-8',refs)).digest,approved[id].materialHash);
  const material=await materialDigest(ROOT,'kolman-6',GROUP_REFS);

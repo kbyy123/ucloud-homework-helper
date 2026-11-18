@@ -6,16 +6,18 @@ import os from 'node:os';
 import {parseProbabilityFourthReferences,FOURTH_REFS} from '../lib/probability-fourth.mjs';
 import {runWithClient,materialDigest,ROOT} from '../run.mjs';
 import {hash} from '../lib/workflow.mjs';
+import {readOptionalJson} from './_local.mjs';
 const ID='2120815538116870145';
-const source=JSON.parse(await readFile(path.join(ROOT,'.inbox',ID,'a441d22da30ccc9871577c444af15953b9120293fd2f4056fd6e7809f693eb53','source.json'),'utf8'));
+const source=await readOptionalJson('.inbox',ID,'a441d22da30ccc9871577c444af15953b9120293fd2f4056fd6e7809f693eb53','source.json');
 
-test('第四次完整八道教材题及补充证明路由；指定小问和全部附加要求参与核对',async()=>{
+test('第四次完整八道教材题及补充证明路由；指定小问和全部附加要求参与核对',async t=>{
+ const approval=await readOptionalJson('approved-tasks.json');
+ if(!source || !approval)return t.skip('需要本地 .inbox/题库/approved-tasks.json 数据');
  assert.deepEqual(parseProbabilityFourthReferences(source.html).refs,FOURTH_REFS);
  for(const html of [source.html.replace('22(2)','22(1)'),source.html.replace('22(2)','22'),source.html+'\n另证独立性',source.html.split('\n\n')[0]])
   assert.equal(parseProbabilityFourthReferences(html).supported,false);
  const material=await materialDigest(ROOT,'probability-bupt-2021',FOURTH_REFS);
  assert.equal(material.generator,'probability_fourth.py');assert.deepEqual(material.index.requiredRefs,FOURTH_REFS);
- const approval=JSON.parse(await readFile(path.join(ROOT,'approved-tasks.json'),'utf8'));
  for(const id of ['2113586328423948289','2116142042516131842','2118854975265439746'])
   assert.equal((await materialDigest(ROOT,'probability-bupt-2021',approval[id].refs)).digest,approval[id].materialHash);
 });

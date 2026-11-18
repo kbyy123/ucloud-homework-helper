@@ -6,16 +6,18 @@ import os from 'node:os';
 import {parseSemigroupReferences,SEMIGROUP_REFS} from '../lib/group-semigroups.mjs';
 import {runWithClient,materialDigest,ROOT} from '../run.mjs';
 import {hash} from '../lib/workflow.mjs';
+import {readOptionalJson} from './_local.mjs';
 const ID='2121152547941277697';
-const source=JSON.parse(await readFile(path.join(ROOT,'.inbox',ID,'e1e53bbf97a29c43dc18445990fdf93dec92efcfbc841f376a72fbbaf7007a5a','source.json'),'utf8'));
+const source=await readOptionalJson('.inbox',ID,'e1e53bbf97a29c43dc18445990fdf93dec92efcfbc841f376a72fbbaf7007a5a','source.json');
 
-test('半群按第六版完整三题和内嵌正整数公式路由；既有群论与概率材料稳定',async()=>{
+test('半群按第六版完整三题和内嵌正整数公式路由；既有群论与概率材料稳定',async t=>{
+ const approved=await readOptionalJson('approved-tasks.json');
+ if(!source || !approved)return t.skip('需要本地 .inbox/题库/approved-tasks.json 数据');
  assert.deepEqual(parseSemigroupReferences(source.html,source.chapter).refs,SEMIGROUP_REFS);
  for(const html of [source.html.replace('20, 30','20, 31'),source.html.replace('Sixth Edition','Fifth Edition'),source.html+'<p>另证一条性质</p>',source.html.replace('iVBOR','aVBOR'),source.html.replace(/<img\b[^>]*>/,''),source.html.replace('给出具体判断依据','无需给出依据')])
   assert.equal(parseSemigroupReferences(html,source.chapter).supported,false);
  assert.equal(parseSemigroupReferences(source.html,'Relations').supported,false);
  const m=await materialDigest(ROOT,'kolman-6',SEMIGROUP_REFS);assert.equal(m.generator,'kolman92.py');assert.deepEqual(m.index.requiredRefs,SEMIGROUP_REFS);
- const approved=JSON.parse(await readFile(path.join(ROOT,'approved-tasks.json'),'utf8'));
  for(const [id,book] of [['2118625671952728065','kolman-6'],['2120815538116870145','probability-bupt-2021']])
   assert.equal((await materialDigest(ROOT,book,approved[id].refs)).digest,approved[id].materialHash);
 });

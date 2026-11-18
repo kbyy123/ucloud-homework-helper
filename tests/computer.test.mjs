@@ -6,12 +6,14 @@ import os from 'node:os';
 import {parseComputerReferences} from '../lib/computer.mjs';
 import {runWithClient,materialDigest,ROOT} from '../run.mjs';
 import {hash} from '../lib/workflow.mjs';
+import {readOptionalJson} from './_local.mjs';
 
 const ID='2113174433014059010';
 const expected=['4/2','4/7','4/8','4/9','4/11','4/12','4/17'];
-const source=JSON.parse(await readFile(path.join(ROOT,'.inbox',ID,'08909035409c496381de81cd71f2da66f2a02f92e091957b44636d4bfc327cb0','source.json'),'utf8'));
+const source=await readOptionalJson('.inbox',ID,'08909035409c496381de81cd71f2da66f2a02f92e091957b44636d4bfc327cb0','source.json');
 
-test('计组从真实正文解析章号与七题；附加要求、范围和不明确小问不悄悄丢弃',()=>{
+test('计组从真实正文解析章号与七题；附加要求、范围和不明确小问不悄悄丢弃',t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  assert.deepEqual(parseComputerReferences(source.html).refs,expected);
  assert.equal(parseComputerReferences(source.html).supported,true);
  assert.deepEqual(parseComputerReferences('第10章课后习题：1,2。').refs,['10/1','10/2']);
@@ -19,6 +21,7 @@ test('计组从真实正文解析章号与七题；附加要求、范围和不�
 });
 
 test('计组题库指纹包含解答与教材，只有完整七题及匹配复核记录才生成；重跑保留人工修改',async t=>{
+ if(!source)return t.skip('需要本地 .inbox 数据');
  const root=await mkdtemp(path.join(os.tmpdir(),'bupt-computer-test-'));
  t.after(async()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));await rm(root,{recursive:true,force:true});});
  const course={key:source.course.key,siteId:source.course.id,siteName:source.course.name,bookId:source.course.bookId};
